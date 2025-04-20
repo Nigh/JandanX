@@ -1,0 +1,27 @@
+{
+  "name": "jandanx",
+  "version": "1.0.0",
+  "description": "A user script change jandan.net into twitter like layout",
+  "main": "jandanX.user.js",
+  "scripts": {
+    "build": "node build.js",
+	"dev": "nodemon -w src -e js,css --exec \"node build.js\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Nigh/JandanX.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Nigh/JandanX/issues"
+  },
+  "homepage": "https://github.com/Nigh/JandanX#readme",
+  "devDependencies": {
+    "esbuild": "^0.25.2",
+    "nodemon": "^3.1.9"
+  }
+}

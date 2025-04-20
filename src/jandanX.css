@@ -1,0 +1,213 @@
+:root {
+	--jd-bg: #000000;
+	--jd-primary: #ffc107;
+	--jd-white: #ffffff;
+	--jd-plain: #cccccc;
+	--jd-dim: #999999;
+	--jd-dark: #666666;
+	--jd-text-dark: #222222;
+	--jd-bg-dark: #222222;
+	--jd-bad: #d36969;
+	--jd-good: #69d3a6;
+	--jd-border: #e5e5e5;
+}
+
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+	background-color: var(--jd-bg);
+	color: var(--jd-plain);
+}
+#x-like-layout {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	width: 100%;
+}
+ul > li {
+	color: var(--jd-plain) !important;
+}
+
+a {
+	color: var(--jd-primary) !important;
+}
+a.unlike,
+.comment-row .xx {
+	color: var(--jd-bad) !important;
+}
+.comment-row .oo {
+	color: var(--jd-primary) !important;
+}
+div.hot-title {
+	background-color: var(--jd-bg-dark) !important;
+}
+
+h2.post-title > a {
+	color: var(--jd-primary) !important;
+}
+div.post-tag > a {
+	color: var(--jd-text-dark) !important;
+}
+div.post-excerpt {
+	color: var(--jd-dim) !important;
+}
+div.post-comment-count {
+	display: none !important;
+}
+.comment-content {
+	color: var(--jd-plain) !important;
+}
+h3.nav-header {
+	color: var(--jd-dark) !important;
+}
+nav.breadcrumb {
+	background-color: transparent !important;
+}
+
+div.search-form {
+	background-color: transparent !important;
+}
+input#bingsearch {
+	background-color: var(--jd-bg-dark) !important;
+	color: var(--jd-plain) !important;
+	border: 1px solid var(--jd-plain);
+	border-radius: 12px;
+	padding: 12px 16px;
+}
+ul.hot-tabs > li.current {
+	background-color: var(--jd-bg-dark) !important;
+	color: var(--jd-primary) !important;
+}
+button {
+	background-color: var(--jd-bg-dark) !important;
+	color: var(--jd-plain) !important;
+	border: 1px solid var(--jd-plain);
+	cursor: pointer;
+}
+button.active {
+	background-color: var(--jd-primary) !important;
+	color: var(--jd-text-dark) !important;
+}
+
+.post blockquote {
+	background-color: var(--jd-bg-dark) !important;
+	color: var(--jd-plain) !important;
+	border-left: 4px solid var(--jd-good) !important;
+	padding: 12px 16px;
+}
+
+.top-nav .current {
+	background-color: var(--jd-primary) !important;
+}
+.top-nav .current > a {
+	color: var(--jd-text-dark) !important;
+}
+
+div.page-navi > a {
+	background-color: transparent !important;
+	border: 1px solid var(--jd-plain) !important;
+}
+
+.nav-next,
+.nav-prev {
+	font-size: 8em;
+	position: sticky;
+	height: fit-content;
+	top: 40%;
+}
+#header {
+	color: white;
+	padding: 16px;
+	font-size: 20px;
+	text-align: center;
+	font-weight: bold;
+}
+#layout-row {
+	display: flex;
+	flex: 1;
+	max-width: 1200px;
+	margin: 0 auto;
+	width: 100%;
+	gap: 16px;
+	padding: 16px;
+	box-sizing: border-box;
+}
+nav#nav {
+	background-color: transparent !important;
+}
+.new-nav {
+	flex: 0 0 200px;
+	padding: 16px;
+	border-radius: 12px;
+	height: fit-content;
+	position: sticky;
+	top: 16px;
+}
+div#navbar {
+	flex-direction: column !important;
+	align-items: start;
+}
+div#navbar > div {
+	position: relative !important;
+}
+ul.navbar-nav {
+	flex: 0 0 200px;
+	flex-direction: column !important;
+}
+.main .header-h1 {
+	background-color: transparent !important;
+}
+main.main {
+	flex: 1;
+	background-color: transparent;
+	padding: 0px 16px;
+	border-radius: 0px;
+}
+aside.sidebar {
+	flex: 0 0 300px;
+	background-color: transparent !important;
+	padding: 16px;
+	border-radius: 12px;
+	border: 1px solid var(--jd-border);
+	height: fit-content;
+	position: sticky;
+	top: 16px;
+}
+#footer {
+	background-color: #1da1f2;
+	color: white;
+	text-align: center;
+	padding: 12px;
+}
+@media (max-width: 768px) {
+	#layout-row {
+		flex-direction: column;
+	}
+	#nav,
+	aside.sidebar {
+		display: none;
+	}
+}
+.ugc-form textarea {
+	background-color: var(--jd-bg-dark) !important;
+	color: var(--jd-plain) !important;
+	border: 1px solid var(--jd-plain);
+	padding: 12px 16px;
+}
+.twitter-style-nav {
+	display: flex;
+	align-items: center;
+}
+
+.twitter-style-nav > a {
+	width: 100%;
+	padding: 12px 12px !important;
+	border-radius: 9999px;
+	cursor: pointer;
+}
+.twitter-style-nav > a:hover {
+	color: var(--jd-dark) !important;
+	background-color: var(--jd-primary) !important;
+	font-weight: 500;
+	transition: background-color 0.2s;
+}
