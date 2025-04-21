@@ -215,11 +215,12 @@ aside.sidebar {
 	padding: 12px 12px !important;
 	border-radius: 9999px;
 	cursor: pointer;
+	font-weight: 1000;
+	font-size: 18px;
 }
 .twitter-style-nav > a:hover {
-	color: var(--jd-dark) !important;
+	color: var(--jd-text-dark) !important;
 	background-color: var(--jd-primary) !important;
-	font-weight: 500;
 	transition: background-color 0.2s;
 }
 
