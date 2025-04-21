@@ -1,5 +1,4 @@
 import css from "./jandanX.css"
-
 ;(function () {
 	"use strict"
 
@@ -26,14 +25,21 @@ import css from "./jandanX.css"
 		last_nav_item.classList.add("twitter-style-nav")
 
 		// Get the necessary elements
-		const nav_next = document.querySelector("div.nav-next")
-		const nav_prev = document.querySelector("div.nav-prev")
 		const header = document.getElementById("header")
 		const nav = document.getElementById("nav")
-		const main = document.querySelector("main.main")
-		const sidebar = document.querySelector("aside.sidebar")
+		const newNav = document.createElement("div")
+		newNav.classList.add("new-nav")
+		newNav.appendChild(header)
+		newNav.appendChild(nav)
+
+		const mainLayout = [
+			document.querySelector("div.nav-next"),
+			newNav,
+			document.querySelector("main.main"),
+			document.querySelector("aside.sidebar"),
+			document.querySelector("div.nav-prev"),
+		]
 		const footer = document.getElementById("footer")
-		console.log(nav_next)
 
 		// Clear existing body and create a new layout
 		document.body.innerHTML = ""
@@ -41,21 +47,16 @@ import css from "./jandanX.css"
 		layout.id = "x-like-layout"
 		document.body.appendChild(layout)
 
-		const newNav = document.createElement("div")
-		newNav.classList.add("new-nav")
-		newNav.appendChild(header)
-		newNav.appendChild(nav)
 		// Create main layout container (3 columns)
 		const layoutRow = document.createElement("div")
 		layoutRow.id = "layout-row"
-		if (nav_next) {
-			layoutRow.appendChild(nav_next)
-		}
-		layoutRow.appendChild(newNav) // Left column
-		layoutRow.appendChild(main) // Center
-		layoutRow.appendChild(sidebar) // Right column
-		if (nav_prev) {
-			layoutRow.appendChild(nav_prev)
+		for (let i in mainLayout) {
+			const item = mainLayout[i]
+			if (mainLayout[i]) {
+				layoutRow.appendChild(item)
+			} else {
+				console.warn("Item", i, " not found:", item)
+			}
 		}
 		layout.appendChild(layoutRow)
 

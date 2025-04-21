@@ -3,10 +3,10 @@
 // @name        JandanX
 // @namespace   none
 // @description twitter like jandan!
-// @version     0.0.3
+// @version     0.0.4
 // @author      xianii
 // @namespace   none
-// @exclude     https://jandan.net/member*
+// @exclude     none
 // @match       https://jandan.net/*
 // @icon        https://raw.githubusercontent.com/Nigh/JandanX/refs/heads/main/jd-logo.png
 // @grant       GM_addStyle
@@ -58,32 +58,33 @@
           });
           const last_nav_item = document.querySelector("div#navbar > div");
           last_nav_item.classList.add("twitter-style-nav");
-          const nav_next = document.querySelector("div.nav-next");
-          const nav_prev = document.querySelector("div.nav-prev");
           const header = document.getElementById("header");
           const nav = document.getElementById("nav");
-          const main = document.querySelector("main.main");
-          const sidebar = document.querySelector("aside.sidebar");
-          const footer = document.getElementById("footer");
-          console.log(nav_next);
-          document.body.innerHTML = "";
-          const layout = document.createElement("div");
-          layout.id = "x-like-layout";
-          document.body.appendChild(layout);
           const newNav = document.createElement("div");
           newNav.classList.add("new-nav");
           newNav.appendChild(header);
           newNav.appendChild(nav);
+          const mainLayout = [
+            document.querySelector("div.nav-next"),
+            newNav,
+            document.querySelector("main.main"),
+            document.querySelector("aside.sidebar"),
+            document.querySelector("div.nav-prev")
+          ];
+          const footer = document.getElementById("footer");
+          document.body.innerHTML = "";
+          const layout = document.createElement("div");
+          layout.id = "x-like-layout";
+          document.body.appendChild(layout);
           const layoutRow = document.createElement("div");
           layoutRow.id = "layout-row";
-          if (nav_next) {
-            layoutRow.appendChild(nav_next);
-          }
-          layoutRow.appendChild(newNav);
-          layoutRow.appendChild(main);
-          layoutRow.appendChild(sidebar);
-          if (nav_prev) {
-            layoutRow.appendChild(nav_prev);
+          for (let i in mainLayout) {
+            const item = mainLayout[i];
+            if (mainLayout[i]) {
+              layoutRow.appendChild(item);
+            } else {
+              console.warn("Item", i, " not found:", item);
+            }
           }
           layout.appendChild(layoutRow);
           layout.appendChild(footer);
