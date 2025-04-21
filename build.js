@@ -7,7 +7,7 @@ const userscriptBanner = `
 // @name        JandanX
 // @namespace   none
 // @description twitter like jandan!
-// @version     0.0.5
+// @version     0.0.6
 // @author      xianii
 // @namespace   none
 // @exclude     none
@@ -17,6 +17,8 @@ const userscriptBanner = `
 // @run-at      document-start
 // @updateURL   https://github.com/Nigh/JandanX/releases/latest/download/jandanX.meta.js
 // @downloadURL https://github.com/Nigh/JandanX/releases/latest/download/jandanX.user.js
+// @license     MIT
+// @homepageURL https://github.com/Nigh/JandanX
 // ==/UserScript==
 `
 
