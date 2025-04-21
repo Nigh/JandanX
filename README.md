@@ -6,7 +6,8 @@
 A user script change [jandan.net](https://jandan.net/) into twitter like layout  
 一个仿推特布局夜间模式的煎蛋 ([jandan.net](https://jandan.net/)) 插件。
 
-## 样式
+## Screenshot
+![image](https://github.com/user-attachments/assets/c55a6b3e-2b9a-4536-b744-eb746500fd6e)
 
 ## 安装
 
