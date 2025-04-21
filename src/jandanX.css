@@ -67,13 +67,24 @@ nav.breadcrumb {
 div.search-form {
 	background-color: transparent !important;
 }
-input#bingsearch {
+input {
 	background-color: var(--jd-bg-dark) !important;
 	color: var(--jd-plain) !important;
 	border: 1px solid var(--jd-plain);
 	border-radius: 12px;
-	padding: 12px 16px;
+	padding: 12px 16px !important;
 }
+div.tucao-container {
+	background-color: var(--jd-bg) !important;
+	color: var(--jd-plain) !important;
+	border: 1px solid var(--jd-plain);
+}
+textarea.tucao-content {
+	background-color: var(--jd-bg-dark) !important;
+	color: var(--jd-plain) !important;
+	border-color: var(--jd-primary) !important;
+}
+
 ul.hot-tabs > li.current {
 	background-color: var(--jd-bg-dark) !important;
 	color: var(--jd-primary) !important;
