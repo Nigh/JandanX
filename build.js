@@ -17,6 +17,8 @@ const userscriptBanner = `
 // @run-at      document-start
 // @updateURL   https://github.com/Nigh/JandanX/releases/latest/download/jandanX.meta.js
 // @downloadURL https://github.com/Nigh/JandanX/releases/latest/download/jandanX.user.js
+// @license     MIT
+// @homepageURL https://github.com/Nigh/JandanX
 // ==/UserScript==
 `
 
