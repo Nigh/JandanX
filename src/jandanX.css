@@ -91,8 +91,8 @@ ul.hot-tabs > li.current {
 }
 button {
 	background-color: var(--jd-bg-dark) !important;
-	color: var(--jd-plain) !important;
-	border: 1px solid var(--jd-plain);
+	color: var(--jd-primary) !important;
+	border: 1px solid var(--jd-plain) !important;
 	cursor: pointer;
 }
 button.active {
