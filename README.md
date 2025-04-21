@@ -1,10 +1,12 @@
 
+![title](title.png)
+
 # JandanX
 
-![logo](jd-logo.png)
-
 A user script change [jandan.net](https://jandan.net/) into twitter like layout  
-一个把煎蛋更改为类似推特布局的插件。
+一个仿推特布局夜间模式的煎蛋 ([jandan.net](https://jandan.net/)) 插件。
+
+## 样式
 
 ## 安装
 
