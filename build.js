@@ -7,10 +7,10 @@ const userscriptBanner = `
 // @name        JandanX
 // @namespace   none
 // @description twitter like jandan!
-// @version     0.0.3
+// @version     0.0.4
 // @author      xianii
 // @namespace   none
-// @exclude     https://jandan.net/member*
+// @exclude     none
 // @match       https://jandan.net/*
 // @icon        https://raw.githubusercontent.com/Nigh/JandanX/refs/heads/main/jd-logo.png
 // @grant       GM_addStyle
