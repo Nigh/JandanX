@@ -8,9 +8,11 @@ A user script change [jandan.net](https://jandan.net/) into twitter like layout
 
 ## 安装
 
-[点击安装](https://github.com/Nigh/JandanX/releases/latest/download/jandanX.user.js)
+已发布至如下平台：
 
-或者进入 [releases](https://github.com/Nigh/JandanX/releases) 页面手动下载安装。
+- [greasyfork](https://greasyfork.org/en/scripts/533519-jandanx)
+- [openuserjs](https://openuserjs.org/scripts/xianii/JandanX)
+- [GitHub releases](https://github.com/Nigh/JandanX/releases)
 
 ## Build
 
