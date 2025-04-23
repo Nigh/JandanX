@@ -29,11 +29,27 @@ ul > li {
 }
 
 a {
-	color: var(--jd-plain) !important;
-}
-a:hover {
 	color: var(--jd-primary) !important;
 }
+a:hover {
+	color: var(--jd-text-dark) !important;
+	background-color: var(--jd-primary) !important;
+}
+
+.post-title a {
+	color: var(--jd-plain) !important;
+}
+.post-title a:hover,
+.logo a:hover {
+	color: var(--jd-primary) !important;
+	background-color: transparent !important;
+}
+
+.nav-next,
+.nav-prev {
+	left: 0 !important;
+}
+
 a.unlike,
 .comment-row .xx {
 	color: var(--jd-bad) !important;
