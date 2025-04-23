@@ -53,7 +53,7 @@ import css from "./jandanX.css"
 		const Nav = document.createElement("nav")
 		Nav.classList.add("navbar")
 
-		document.querySelectorAll("li.nav-item > a").forEach((a) => {
+		document.querySelectorAll("nav li.nav-item > a").forEach((a) => {
 			Nav.appendChild(nav_div(a, a.innerHTML))
 		})
 		Nav.appendChild(

@@ -180,6 +180,16 @@ nav#nav {
 	position: sticky;
 	top: 16px;
 }
+
+.member-nav .active {
+	background-color: transparent !important;
+}
+.member-nav .active > a,
+.member-nav .active > a:hover {
+	background-color: var(--jd-primary) !important;
+	color: var(--jd-text-dark) !important;
+}
+
 div#navbar {
 	flex-direction: column !important;
 	align-items: start;
