@@ -132,13 +132,6 @@ button.active {
 	padding: 12px 16px;
 }
 
-.top-nav .current {
-	background-color: var(--jd-primary) !important;
-}
-.top-nav .current > a {
-	color: var(--jd-text-dark) !important;
-}
-
 div.page-navi > a {
 	background-color: transparent !important;
 	border: 1px solid var(--jd-plain) !important;
@@ -242,6 +235,18 @@ aside.sidebar {
 	padding: 12px 16px;
 }
 
+.top-nav > div.nav-item.current {
+	background-color: var(--jd-primary) !important;
+}
+.top-nav > div.nav-item.current > a {
+	color: var(--jd-text-dark) !important;
+}
+.top-nav > div.nav-item > a:hover {
+	color: var(--jd-text-dark) !important;
+	background-color: var(--jd-primary) !important;
+	border-radius: 0px;
+}
+
 .navbar {
 	align-items: stretch;
 	background-color: rgba(0, 0, 0, 0);
@@ -293,6 +298,7 @@ aside.sidebar {
 	background-color: var(--jd-bg-dark) !important;
 	transition: background-color 0.2s;
 }
+
 .nav-icon {
 	width: 24px !important;
 	height: 24px !important;
