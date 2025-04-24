@@ -53,9 +53,11 @@ import css from "./jandanX.css"
 		const Nav = document.createElement("nav")
 		Nav.classList.add("navbar")
 
-		document.querySelectorAll("ul.main-nav li > a").forEach((a) => {
-			Nav.appendChild(nav_div(a, a.innerHTML))
-		})
+		document
+			.querySelectorAll("ul.main-nav li:not(#nav-more) > a")
+			.forEach((a) => {
+				Nav.appendChild(nav_div(a, a.innerHTML))
+			})
 
 		let member = document.createElement("a")
 		member.setAttribute("href", "/member")
