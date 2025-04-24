@@ -53,12 +53,16 @@ import css from "./jandanX.css"
 		const Nav = document.createElement("nav")
 		Nav.classList.add("navbar")
 
-		document.querySelectorAll("nav li.nav-item > a").forEach((a) => {
-			Nav.appendChild(nav_div(a, a.innerHTML))
-		})
-		Nav.appendChild(
-			nav_div(document.querySelector("div#navbar > div > a"), "用户中心")
-		)
+		document
+			.querySelectorAll("ul.main-nav li:not(#nav-more) > a")
+			.forEach((a) => {
+				Nav.appendChild(nav_div(a, a.innerHTML))
+			})
+
+		let member = document.createElement("a")
+		member.setAttribute("href", "/member")
+		member.innerHTML = "用户中心"
+		Nav.appendChild(nav_div(member, member.innerHTML))
 
 		// Get the necessary elements
 		const header = document.getElementById("header")
