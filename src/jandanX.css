@@ -9,7 +9,7 @@
 	--jd-bg-dark: #222222;
 	--jd-bad: #d36969;
 	--jd-good: #69d3a6;
-	--jd-border: #e5e5e5;
+	--jd-border: #41464b;
 }
 
 body {
@@ -311,5 +311,9 @@ div#float-window {
 }
 
 .logo {
-	filter: contrast(0.4) grayscale() brightness(1.5);
+	position: relative;
+	width: 120px;
+	height: 50px;
+	overflow: hidden;
+	margin: 0px 0px 20px 20px;
 }

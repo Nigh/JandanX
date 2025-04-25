@@ -65,10 +65,34 @@ import css from "./jandanX.css"
 		Nav.appendChild(nav_div(member, member.innerHTML))
 
 		// Get the necessary elements
-		const header = document.getElementById("header")
+		const logo = document.querySelector("header#header>div.logo>a>img")
+		const logoSrc = logo.getAttribute("src")
+		const newLogo = document.createElement("div")
+		newLogo.classList.add("logo")
+		const newLogoL = document.createElement("div")
+		newLogoL.classList.add("logoL")
+		const newLogoR = document.createElement("div")
+		newLogoR.classList.add("logoR")
+		let logoSpiltStyle = "background-image: url(" + logoSrc + ");"
+		logoSpiltStyle +=
+			"position: absolute;top: 0; bottom: 0; left: 0; right: 0;"
+		logoSpiltStyle += "background-size: cover;"
+		const logoSpiltPercent = "38%"
+		let logoSpiltStyleL =
+			logoSpiltStyle + "clip-path: inset(0 " + logoSpiltPercent + " 0 0);"
+		let logoSpiltStyleR =
+			logoSpiltStyle + "clip-path: inset(0 0 0 " + logoSpiltPercent + ");"
+		newLogoL.setAttribute("style", logoSpiltStyleL)
+		newLogoR.setAttribute(
+			"style",
+			logoSpiltStyleR + "filter: brightness(5);"
+		)
+		newLogo.appendChild(newLogoL)
+		newLogo.appendChild(newLogoR)
+
 		const newNav = document.createElement("div")
 		newNav.classList.add("new-nav")
-		newNav.appendChild(header)
+		newNav.appendChild(newLogo)
 		newNav.appendChild(Nav)
 
 		const mainLayout = [
