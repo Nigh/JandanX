@@ -64,8 +64,9 @@ import css from "./jandanX.css"
 		member.innerHTML = "用户中心"
 		Nav.appendChild(nav_div(member, member.innerHTML))
 
-		// Get the necessary elements
-		const logo = document.querySelector("header#header>div.logo>a>img")
+		const logo = document.querySelector(
+			"header#header>div.logo>a>picture>img"
+		)
 		const logoSrc = logo.getAttribute("src")
 		const newLogo = document.createElement("div")
 		newLogo.classList.add("logo")
@@ -95,6 +96,7 @@ import css from "./jandanX.css"
 		newNav.appendChild(newLogo)
 		newNav.appendChild(Nav)
 
+		// Get the necessary elements
 		const mainLayout = [
 			document.querySelector("div.nav-next"),
 			newNav,
