@@ -36,9 +36,11 @@ a:hover {
 	background-color: var(--jd-primary) !important;
 }
 
+.topic-title a,
 .post-title a {
 	color: var(--jd-plain) !important;
 }
+.topic-title a:hover,
 .post-title a:hover,
 .logo a:hover {
 	color: var(--jd-primary) !important;
@@ -310,6 +312,13 @@ aside.sidebar {
 	height: 24px !important;
 	margin-right: 12px;
 	display: block;
+}
+
+.reply-container {
+	background-color: transparent !important;
+}
+.topic-author {
+	color: var(--jd-dim) !important;
 }
 
 div#float-window {
