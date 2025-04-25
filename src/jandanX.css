@@ -311,5 +311,9 @@ div#float-window {
 }
 
 .logo {
-	filter: contrast(0.4) grayscale() brightness(1.5);
+	position: relative;
+	width: 120px;
+	height: 50px;
+	overflow: hidden;
+	margin: 0px 0px 20px 20px;
 }
