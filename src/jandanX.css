@@ -202,19 +202,31 @@ ul.navbar-nav {
 main.main {
 	flex: 1;
 	background-color: transparent;
-	padding: 0px 16px;
+	padding: 0px;
 	border-radius: 0px;
+	border-left: 1px solid var(--jd-border) !important;
+	border-right: 1px solid var(--jd-border) !important;
 }
 aside.sidebar {
 	flex: 0 0 300px;
 	background-color: transparent !important;
-	padding: 16px;
+	padding: 16px 0px;
 	border-radius: 12px;
 	border: 1px solid var(--jd-border);
 	height: fit-content;
 	position: sticky;
-	top: 16px;
 }
+.row {
+	margin: 0px !important;
+}
+.sidebar .nav-header {
+	border-top: 1px solid var(--jd-border) !important;
+}
+.main .header-h1,
+.post-item {
+	border-bottom: 1px solid var(--jd-border) !important;
+}
+
 #footer {
 	background-color: #1da1f2;
 	color: white;
