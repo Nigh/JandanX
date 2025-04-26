@@ -233,12 +233,16 @@ aside.sidebar {
 	text-align: center;
 	padding: 12px;
 }
+@media (max-width: 1080px) {
+	aside.sidebar {
+		display: none !important;
+	}
+}
 @media (max-width: 768px) {
 	#layout-row {
 		flex-direction: column;
 	}
-	#nav,
-	aside.sidebar {
+	div.new-nav {
 		display: none;
 	}
 }
