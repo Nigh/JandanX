@@ -15,7 +15,7 @@
 body {
 	margin: 0;
 	font-family: Arial, sans-serif;
-	background-color: var(--jd-bg);
+	background-color: var(--jd-bg) !important;
 	color: var(--jd-plain);
 }
 #x-like-layout {
@@ -106,7 +106,7 @@ div.tucao-container {
 	color: var(--jd-plain) !important;
 	border: 1px solid var(--jd-plain);
 }
-textarea.tucao-content {
+textarea {
 	background-color: var(--jd-bg-dark) !important;
 	color: var(--jd-plain) !important;
 	border-color: var(--jd-primary) !important;
@@ -202,39 +202,49 @@ ul.navbar-nav {
 main.main {
 	flex: 1;
 	background-color: transparent;
-	padding: 0px 16px;
+	padding: 0px;
 	border-radius: 0px;
+	border-left: 1px solid var(--jd-border) !important;
+	border-right: 1px solid var(--jd-border) !important;
 }
 aside.sidebar {
 	flex: 0 0 300px;
 	background-color: transparent !important;
-	padding: 16px;
+	padding: 16px 0px;
 	border-radius: 12px;
 	border: 1px solid var(--jd-border);
 	height: fit-content;
 	position: sticky;
-	top: 16px;
 }
+.row {
+	margin: 0px !important;
+}
+.sidebar .nav-header {
+	border-top: 1px solid var(--jd-border) !important;
+}
+.main .header-h1,
+.post-item {
+	border-bottom: 1px solid var(--jd-border) !important;
+}
+
 #footer {
 	background-color: #1da1f2;
 	color: white;
 	text-align: center;
 	padding: 12px;
 }
+@media (max-width: 1080px) {
+	aside.sidebar {
+		display: none !important;
+	}
+}
 @media (max-width: 768px) {
 	#layout-row {
 		flex-direction: column;
 	}
-	#nav,
-	aside.sidebar {
+	div.new-nav {
 		display: none;
 	}
-}
-.ugc-form textarea {
-	background-color: var(--jd-bg-dark) !important;
-	color: var(--jd-plain) !important;
-	border: 1px solid var(--jd-plain);
-	padding: 12px 16px;
 }
 .top-nav > div.nav-item {
 	background-color: transparent !important;
@@ -253,7 +263,7 @@ aside.sidebar {
 
 .navbar {
 	align-items: stretch;
-	background-color: rgba(0, 0, 0, 0);
+	background-color: transparent !important;
 	border: 0 solid black;
 	box-sizing: border-box;
 	display: flex;

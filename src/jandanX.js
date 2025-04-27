@@ -64,17 +64,14 @@ import css from "./jandanX.css"
 		member.innerHTML = "用户中心"
 		Nav.appendChild(nav_div(member, member.innerHTML))
 
-		const logo = document.querySelector(
-			"header#header>div.logo>a>picture>img"
-		)
-		const logoSrc = logo.getAttribute("src")
 		const newLogo = document.createElement("div")
 		newLogo.classList.add("logo")
 		const newLogoL = document.createElement("div")
 		newLogoL.classList.add("logoL")
 		const newLogoR = document.createElement("div")
 		newLogoR.classList.add("logoR")
-		let logoSpiltStyle = "background-image: url(" + logoSrc + ");"
+		let logoSpiltStyle =
+			"background-image: url(/wp-content/themes/jandan2025/images/logo2025.png);"
 		logoSpiltStyle +=
 			"position: absolute;top: 0; bottom: 0; left: 0; right: 0;"
 		logoSpiltStyle += "background-size: cover;"
