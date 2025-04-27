@@ -15,7 +15,7 @@
 body {
 	margin: 0;
 	font-family: Arial, sans-serif;
-	background-color: var(--jd-bg);
+	background-color: var(--jd-bg) !important;
 	color: var(--jd-plain);
 }
 #x-like-layout {
@@ -263,7 +263,7 @@ aside.sidebar {
 
 .navbar {
 	align-items: stretch;
-	background-color: rgba(0, 0, 0, 0);
+	background-color: transparent !important;
 	border: 0 solid black;
 	box-sizing: border-box;
 	display: flex;
