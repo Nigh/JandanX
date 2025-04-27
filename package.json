@@ -12,9 +12,9 @@
     "type": "git",
     "url": "git+https://github.com/Nigh/JandanX.git"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": ["jandan", "userscript", "jandan.net", "twitter"],
+  "author": "Nigh",
+  "license": "MIT",
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Nigh/JandanX/issues"
