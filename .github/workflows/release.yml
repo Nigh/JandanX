@@ -44,6 +44,7 @@ jobs:
         with:
           name: ${{ github.ref_name }}
           generate_release_notes: true
+          fail_on_unmatched_files: true
           files: |
             dist/jandanX.user.js
             dist/jandanX.meta.js

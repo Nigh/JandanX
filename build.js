@@ -2,12 +2,13 @@
 const esbuild = require("esbuild")
 const fs = require("fs").promises
 
-const userscriptBanner = `
+function createUserscriptBanner(version) {
+	return `
 // ==UserScript==
 // @name        JandanX
 // @namespace   none
 // @description twitter like jandan!
-// @version     1.1.0
+// @version     ${version}
 // @author      xianii
 // @namespace   none
 // @exclude     none
@@ -21,9 +22,22 @@ const userscriptBanner = `
 // @homepageURL https://github.com/Nigh/JandanX
 // ==/UserScript==
 `
+}
 
-async function buildUserscript() {
+async function getPackageVersion() {
+	const packageJsonRaw = await fs.readFile("package.json", "utf8")
+	const packageJson = JSON.parse(packageJsonRaw)
+
+	if (!packageJson.version) {
+		throw new Error("package.json 中未找到 version 字段")
+	}
+
+	return packageJson.version
+}
+
+async function buildUserscript(userscriptBanner) {
 	try {
+		await fs.mkdir("dist", { recursive: true })
 		await esbuild.build({
 			entryPoints: ["src/jandanX.js"],
 			bundle: true,
@@ -36,21 +50,28 @@ async function buildUserscript() {
 		console.log("Built dist/jandanX.user.js")
 	} catch (error) {
 		console.error("Error building userscript:", error)
+		throw error
 	}
 }
 
-async function buildMeta() {
+async function buildMeta(userscriptBanner) {
 	try {
+		await fs.mkdir("dist", { recursive: true })
 		// Extract the metadata block
 		const metaContent = userscriptBanner.trim()
 		await fs.writeFile("dist/jandanX.meta.js", metaContent + "\n")
 		console.log("Built dist/jandanX.meta.js")
 	} catch (error) {
 		console.error("Error building meta.js:", error)
+		throw error
 	}
 }
 
 async function main() {
-	await Promise.all([buildUserscript(), buildMeta()])
+	const version = await getPackageVersion()
+	const userscriptBanner = createUserscriptBanner(version)
+
+	await buildUserscript(userscriptBanner)
+	await buildMeta(userscriptBanner)
 }
 main()
