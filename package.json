@@ -1,6 +1,6 @@
 {
   "name": "jandanx",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A user script change jandan.net into twitter like layout",
   "main": "jandanX.user.js",
   "scripts": {

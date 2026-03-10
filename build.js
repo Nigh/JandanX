@@ -7,7 +7,7 @@ const userscriptBanner = `
 // @name        JandanX
 // @namespace   none
 // @description twitter like jandan!
-// @version     1.0.1
+// @version     1.1.0
 // @author      xianii
 // @namespace   none
 // @exclude     none

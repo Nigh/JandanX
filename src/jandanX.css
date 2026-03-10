@@ -10,6 +10,8 @@
 	--jd-bad: #d36969;
 	--jd-good: #69d3a6;
 	--jd-border: #41464b;
+	--jd-nav-left-gap: 0px;
+	--jd-nav-right-gap: 0px;
 }
 
 body {
@@ -146,6 +148,52 @@ div.page-navi > a {
 	height: fit-content;
 	top: 40%;
 }
+
+@media (min-width: 769px) {
+	div.nav-next,
+	div.nav-prev {
+		position: fixed !important;
+		top: 0 !important;
+		bottom: 0 !important;
+		height: auto !important;
+		margin: 0 !important;
+		transform: none !important;
+		display: flex;
+		align-items: center;
+		z-index: 20;
+		font-size: 8em;
+	}
+
+	div.nav-next {
+		left: 0 !important;
+		right: auto !important;
+		width: max(0px, var(--jd-nav-left-gap)) !important;
+	}
+
+	div.nav-prev {
+		right: 0 !important;
+		left: auto !important;
+		width: max(0px, var(--jd-nav-right-gap)) !important;
+	}
+
+	div.nav-next > a,
+	div.nav-prev > a {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+	}
+
+	div.nav-next > a {
+		justify-content: flex-end;
+	}
+
+	div.nav-prev > a {
+		justify-content: flex-start;
+	}
+}
+
 #header {
 	color: white;
 	padding: 12px;
