@@ -243,9 +243,32 @@ aside.sidebar {
 		flex-direction: column;
 	}
 
+	div.nav-prev,
+	div.nav-next {
+		display: none !important;
+	}
+
 	/* Hide .new-nav on mobile devices since we're using mobile menu */
 	.new-nav {
 		display: none !important;
+	}
+
+	div.page-nav button.page-nav-prev-btn,
+	div.page-nav button.page-nav-next-btn {
+		min-width: 44px;
+		min-height: 44px;
+		padding: 10px 14px;
+		font-size: 22px;
+		line-height: 1;
+	}
+
+	div.page-nav li:first-child > button[type="button"],
+	div.page-nav li:last-child > button[type="button"] {
+		min-width: 44px;
+		min-height: 44px;
+		padding: 10px 14px;
+		font-size: 22px;
+		line-height: 1;
 	}
 }
 .top-nav > div.nav-item {

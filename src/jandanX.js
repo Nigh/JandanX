@@ -29,6 +29,92 @@ import css from "./jandanX.css"
 		document.head.insertBefore(style, document.head.firstChild)
 	})
 	window.addEventListener("load", () => {
+		let pageNavObserver = null
+		let optimizePageNavTimer = null
+
+		function optimizePageNav() {
+			const pageNavList = document.querySelectorAll("div.page-nav ul")
+			if (!pageNavList.length) return
+
+			pageNavList.forEach((pageNav) => {
+				const items = Array.from(pageNav.querySelectorAll("li"))
+				let prevLi = null
+				let nextLi = null
+
+				items.forEach((li) => {
+					const btn = li.querySelector('button[type="button"]')
+					if (!btn) return
+					btn.classList.remove("page-nav-prev-btn", "page-nav-next-btn")
+					const label = btn.textContent?.trim()
+					if (label === "<") {
+						prevLi = li
+						btn.classList.add("page-nav-prev-btn")
+					} else if (label === ">") {
+						nextLi = li
+						btn.classList.add("page-nav-next-btn")
+					}
+				})
+
+				if (prevLi) pageNav.insertBefore(prevLi, pageNav.firstChild)
+				if (nextLi) pageNav.appendChild(nextLi)
+			})
+		}
+
+		function scheduleOptimizePageNav(delay = 60) {
+			if (optimizePageNavTimer) {
+				window.clearTimeout(optimizePageNavTimer)
+			}
+			optimizePageNavTimer = window.setTimeout(() => {
+				optimizePageNav()
+			}, delay)
+		}
+
+		function bindPageNavClickFallback() {
+			document.addEventListener("click", (event) => {
+				const btn = event.target.closest("div.page-nav button[type='button']")
+				if (!btn) return
+				scheduleOptimizePageNav(30)
+				scheduleOptimizePageNav(120)
+			})
+		}
+
+		function observePageNavChanges() {
+			if (pageNavObserver) pageNavObserver.disconnect()
+
+			const root = document.querySelector("main.main") || document.body
+			if (!root) return
+
+			pageNavObserver = new MutationObserver((mutations) => {
+				for (const mutation of mutations) {
+					if (mutation.type !== "childList") continue
+
+					const hasRelevantChange =
+						Array.from(mutation.addedNodes).some(
+							(node) =>
+								node.nodeType === 1 &&
+								(node.matches?.("div.page-nav, div.page-nav ul") ||
+									node.querySelector?.("div.page-nav, div.page-nav ul"))
+						) ||
+						Array.from(mutation.removedNodes).some(
+							(node) =>
+								node.nodeType === 1 &&
+								(node.matches?.("div.page-nav, div.page-nav ul") ||
+									node.querySelector?.("div.page-nav, div.page-nav ul"))
+						)
+
+					if (hasRelevantChange) {
+						scheduleOptimizePageNav(20)
+						break
+					}
+				}
+			})
+
+			pageNavObserver.observe(root, {
+				childList: true,
+				subtree: true,
+			})
+		}
+
 		// 重构导航栏
 		const nav_div = function (a, svg) {
 			let nav_item = document.createElement("div")
@@ -198,6 +284,9 @@ import css from "./jandanX.css"
 		// Add footer
 		layout.appendChild(footer)
 
+		optimizePageNav()
+		observePageNavChanges()
+		bindPageNavClickFallback()
 		renderNavByViewport()
 		window.addEventListener("resize", () => {
 			renderNavByViewport()
