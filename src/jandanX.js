@@ -29,6 +29,119 @@ import css from "./jandanX.css"
 		document.head.insertBefore(style, document.head.firstChild)
 	})
 	window.addEventListener("load", () => {
+		let pageNavObserver = null
+		let optimizePageNavTimer = null
+		let navGapTimer = null
+
+		function optimizePageNav() {
+			const pageNavList = document.querySelectorAll("div.page-nav ul")
+			if (!pageNavList.length) return
+
+			pageNavList.forEach((pageNav) => {
+				const items = Array.from(pageNav.querySelectorAll("li"))
+				let prevLi = null
+				let nextLi = null
+
+				items.forEach((li) => {
+					const btn = li.querySelector('button[type="button"]')
+					if (!btn) return
+					btn.classList.remove("page-nav-prev-btn", "page-nav-next-btn")
+					const label = btn.textContent?.trim()
+					if (label === "<") {
+						prevLi = li
+						btn.classList.add("page-nav-prev-btn")
+					} else if (label === ">") {
+						nextLi = li
+						btn.classList.add("page-nav-next-btn")
+					}
+				})
+
+				if (prevLi) pageNav.insertBefore(prevLi, pageNav.firstChild)
+				if (nextLi) pageNav.appendChild(nextLi)
+			})
+		}
+
+		function scheduleOptimizePageNav(delay = 60) {
+			if (optimizePageNavTimer) {
+				window.clearTimeout(optimizePageNavTimer)
+			}
+			optimizePageNavTimer = window.setTimeout(() => {
+				optimizePageNav()
+			}, delay)
+		}
+
+		function bindPageNavClickFallback() {
+			document.addEventListener("click", (event) => {
+				const btn = event.target.closest("div.page-nav button[type='button']")
+				if (!btn) return
+				scheduleOptimizePageNav(30)
+				scheduleOptimizePageNav(120)
+			})
+		}
+
+		function observePageNavChanges() {
+			if (pageNavObserver) pageNavObserver.disconnect()
+
+			const root = document.querySelector("main.main") || document.body
+			if (!root) return
+
+			pageNavObserver = new MutationObserver((mutations) => {
+				for (const mutation of mutations) {
+					if (mutation.type !== "childList") continue
+
+					const hasRelevantChange =
+						Array.from(mutation.addedNodes).some(
+							(node) =>
+								node.nodeType === 1 &&
+								(node.matches?.("div.page-nav, div.page-nav ul") ||
+									node.querySelector?.("div.page-nav, div.page-nav ul"))
+						) ||
+						Array.from(mutation.removedNodes).some(
+							(node) =>
+								node.nodeType === 1 &&
+								(node.matches?.("div.page-nav, div.page-nav ul") ||
+									node.querySelector?.("div.page-nav, div.page-nav ul"))
+						)
+
+					if (hasRelevantChange) {
+						scheduleOptimizePageNav(20)
+						break
+					}
+				}
+			})
+
+			pageNavObserver.observe(root, {
+				childList: true,
+				subtree: true,
+			})
+		}
+
+		function updateSideNavGapVars() {
+			const root = document.documentElement
+			if (!root) return
+
+			if (window.innerWidth <= 768) {
+				root.style.setProperty("--jd-nav-left-gap", "0px")
+				root.style.setProperty("--jd-nav-right-gap", "0px")
+				return
+			}
+
+			const layoutRow = document.getElementById("layout-row")
+			if (!layoutRow) return
+
+			const rect = layoutRow.getBoundingClientRect()
+			const leftGap = Math.max(0, rect.left)
+			const rightGap = Math.max(0, window.innerWidth - rect.right)
+
+			root.style.setProperty("--jd-nav-left-gap", `${leftGap}px`)
+			root.style.setProperty("--jd-nav-right-gap", `${rightGap}px`)
+		}
+
+		function scheduleUpdateSideNavGapVars(delay = 0) {
+			if (navGapTimer) window.clearTimeout(navGapTimer)
+			navGapTimer = window.setTimeout(updateSideNavGapVars, delay)
+		}
+
 		// 重构导航栏
 		const nav_div = function (a, svg) {
 			let nav_item = document.createElement("div")
@@ -90,8 +203,81 @@ import css from "./jandanX.css"
 
 		const newNav = document.createElement("div")
 		newNav.classList.add("new-nav")
-		newNav.appendChild(newLogo)
-		newNav.appendChild(Nav)
+
+		let hamburger = null
+		let mobileMenu = null
+		let mask = null
+
+		function closeMobileMenu() {
+			if (!hamburger || !mobileMenu || !mask) return
+			mobileMenu.classList.remove("active")
+			hamburger.classList.remove("active")
+			mask.classList.remove("active")
+			document.body.classList.remove("menu-active")
+		}
+
+		function positionMobileMenu() {
+			if (!hamburger || !mobileMenu) return
+			const rect = hamburger.getBoundingClientRect()
+			const gap = 8
+			mobileMenu.style.top = `${Math.max(8, rect.top - mobileMenu.offsetHeight - gap)}px`
+			mobileMenu.style.left = `${Math.max(8, rect.right - mobileMenu.offsetWidth)}px`
+		}
+
+		function clearMobileMenu() {
+			if (hamburger) hamburger.remove()
+			if (mobileMenu) mobileMenu.remove()
+			if (mask) mask.remove()
+			hamburger = null
+			mobileMenu = null
+			mask = null
+			document.body.classList.remove("menu-active")
+		}
+
+		function createMobileMenu() {
+			hamburger = document.createElement("div")
+			hamburger.classList.add("hamburger")
+			hamburger.innerHTML = "<span></span><span></span><span></span>"
+
+			mobileMenu = document.createElement("div")
+			mobileMenu.classList.add("mobile-nav-menu")
+			mobileMenu.appendChild(Nav)
+
+			mask = document.createElement("div")
+			mask.classList.add("mask")
+
+			document.body.appendChild(mask)
+			document.body.appendChild(mobileMenu)
+			document.body.appendChild(hamburger)
+
+			hamburger.addEventListener("click", function () {
+				mobileMenu.classList.toggle("active")
+				hamburger.classList.toggle("active")
+				mask.classList.toggle("active")
+				if (mobileMenu.classList.contains("active")) {
+					document.body.classList.add("menu-active")
+					positionMobileMenu()
+				} else {
+					document.body.classList.remove("menu-active")
+				}
+			})
+
+			mask.addEventListener("click", closeMobileMenu)
+		}
+
+		function renderNavByViewport() {
+			const isMobile = window.innerWidth <= 768
+			if (isMobile) {
+				if (!mobileMenu) createMobileMenu()
+				if (newNav.contains(newLogo)) newNav.removeChild(newLogo)
+				if (newNav.contains(Nav)) newNav.removeChild(Nav)
+				if (!mobileMenu.contains(Nav)) mobileMenu.appendChild(Nav)
+			} else {
+				clearMobileMenu()
+				if (!newNav.contains(newLogo)) newNav.appendChild(newLogo)
+				if (!newNav.contains(Nav)) newNav.appendChild(Nav)
+			}
+		}
 
 		// Get the necessary elements
 		const mainLayout = [
@@ -124,6 +310,23 @@ import css from "./jandanX.css"
 
 		// Add footer
 		layout.appendChild(footer)
+		scheduleUpdateSideNavGapVars(0)
+
+		optimizePageNav()
+		observePageNavChanges()
+		bindPageNavClickFallback()
+		renderNavByViewport()
+		window.addEventListener("resize", () => {
+			renderNavByViewport()
+			scheduleUpdateSideNavGapVars(0)
+			if (mobileMenu && mobileMenu.classList.contains("active")) {
+				positionMobileMenu()
+			}
+		})
+
+		window.addEventListener("scroll", () => {
+			scheduleUpdateSideNavGapVars(0)
+		})
 
 		// Add styles
 		GM_addStyle(css)
