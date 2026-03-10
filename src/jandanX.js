@@ -31,6 +31,7 @@ import css from "./jandanX.css"
 	window.addEventListener("load", () => {
 		let pageNavObserver = null
 		let optimizePageNavTimer = null
+		let navGapTimer = null
 
 		function optimizePageNav() {
 			const pageNavList = document.querySelectorAll("div.page-nav ul")
@@ -113,6 +114,32 @@ import css from "./jandanX.css"
 				childList: true,
 				subtree: true,
 			})
+		}
+
+		function updateSideNavGapVars() {
+			const root = document.documentElement
+			if (!root) return
+
+			if (window.innerWidth <= 768) {
+				root.style.setProperty("--jd-nav-left-gap", "0px")
+				root.style.setProperty("--jd-nav-right-gap", "0px")
+				return
+			}
+
+			const layoutRow = document.getElementById("layout-row")
+			if (!layoutRow) return
+
+			const rect = layoutRow.getBoundingClientRect()
+			const leftGap = Math.max(0, rect.left)
+			const rightGap = Math.max(0, window.innerWidth - rect.right)
+
+			root.style.setProperty("--jd-nav-left-gap", `${leftGap}px`)
+			root.style.setProperty("--jd-nav-right-gap", `${rightGap}px`)
+		}
+
+		function scheduleUpdateSideNavGapVars(delay = 0) {
+			if (navGapTimer) window.clearTimeout(navGapTimer)
+			navGapTimer = window.setTimeout(updateSideNavGapVars, delay)
 		}
 
 		// 重构导航栏
@@ -283,6 +310,7 @@ import css from "./jandanX.css"
 
 		// Add footer
 		layout.appendChild(footer)
+		scheduleUpdateSideNavGapVars(0)
 
 		optimizePageNav()
 		observePageNavChanges()
@@ -290,9 +318,14 @@ import css from "./jandanX.css"
 		renderNavByViewport()
 		window.addEventListener("resize", () => {
 			renderNavByViewport()
+			scheduleUpdateSideNavGapVars(0)
 			if (mobileMenu && mobileMenu.classList.contains("active")) {
 				positionMobileMenu()
 			}
+		})
+
+		window.addEventListener("scroll", () => {
+			scheduleUpdateSideNavGapVars(0)
 		})
 
 		// Add styles
