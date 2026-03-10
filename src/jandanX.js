@@ -90,8 +90,81 @@ import css from "./jandanX.css"
 
 		const newNav = document.createElement("div")
 		newNav.classList.add("new-nav")
-		newNav.appendChild(newLogo)
-		newNav.appendChild(Nav)
+
+		let hamburger = null
+		let mobileMenu = null
+		let mask = null
+
+		function closeMobileMenu() {
+			if (!hamburger || !mobileMenu || !mask) return
+			mobileMenu.classList.remove("active")
+			hamburger.classList.remove("active")
+			mask.classList.remove("active")
+			document.body.classList.remove("menu-active")
+		}
+
+		function positionMobileMenu() {
+			if (!hamburger || !mobileMenu) return
+			const rect = hamburger.getBoundingClientRect()
+			const gap = 8
+			mobileMenu.style.top = `${Math.max(8, rect.top - mobileMenu.offsetHeight - gap)}px`
+			mobileMenu.style.left = `${Math.max(8, rect.right - mobileMenu.offsetWidth)}px`
+		}
+
+		function clearMobileMenu() {
+			if (hamburger) hamburger.remove()
+			if (mobileMenu) mobileMenu.remove()
+			if (mask) mask.remove()
+			hamburger = null
+			mobileMenu = null
+			mask = null
+			document.body.classList.remove("menu-active")
+		}
+
+		function createMobileMenu() {
+			hamburger = document.createElement("div")
+			hamburger.classList.add("hamburger")
+			hamburger.innerHTML = "<span></span><span></span><span></span>"
+
+			mobileMenu = document.createElement("div")
+			mobileMenu.classList.add("mobile-nav-menu")
+			mobileMenu.appendChild(Nav)
+
+			mask = document.createElement("div")
+			mask.classList.add("mask")
+
+			document.body.appendChild(mask)
+			document.body.appendChild(mobileMenu)
+			document.body.appendChild(hamburger)
+
+			hamburger.addEventListener("click", function () {
+				mobileMenu.classList.toggle("active")
+				hamburger.classList.toggle("active")
+				mask.classList.toggle("active")
+				if (mobileMenu.classList.contains("active")) {
+					document.body.classList.add("menu-active")
+					positionMobileMenu()
+				} else {
+					document.body.classList.remove("menu-active")
+				}
+			})
+
+			mask.addEventListener("click", closeMobileMenu)
+		}
+
+		function renderNavByViewport() {
+			const isMobile = window.innerWidth <= 768
+			if (isMobile) {
+				if (!mobileMenu) createMobileMenu()
+				if (newNav.contains(newLogo)) newNav.removeChild(newLogo)
+				if (newNav.contains(Nav)) newNav.removeChild(Nav)
+				if (!mobileMenu.contains(Nav)) mobileMenu.appendChild(Nav)
+			} else {
+				clearMobileMenu()
+				if (!newNav.contains(newLogo)) newNav.appendChild(newLogo)
+				if (!newNav.contains(Nav)) newNav.appendChild(Nav)
+			}
+		}
 
 		// Get the necessary elements
 		const mainLayout = [
@@ -124,6 +197,14 @@ import css from "./jandanX.css"
 
 		// Add footer
 		layout.appendChild(footer)
+
+		renderNavByViewport()
+		window.addEventListener("resize", () => {
+			renderNavByViewport()
+			if (mobileMenu && mobileMenu.classList.contains("active")) {
+				positionMobileMenu()
+			}
+		})
 
 		// Add styles
 		GM_addStyle(css)

@@ -242,8 +242,10 @@ aside.sidebar {
 	#layout-row {
 		flex-direction: column;
 	}
-	div.new-nav {
-		display: none;
+
+	/* Hide .new-nav on mobile devices since we're using mobile menu */
+	.new-nav {
+		display: none !important;
 	}
 }
 .top-nav > div.nav-item {
@@ -341,4 +343,108 @@ div#float-window {
 	height: 50px;
 	overflow: hidden;
 	margin: 0px 0px 20px 20px;
+}
+
+/* Mobile menu styles */
+@media (max-width: 768px) {
+	/* Hamburger button - now positioned at bottom right */
+	.hamburger {
+		display: block;
+		width: 40px;
+		height: 40px;
+		position: fixed;
+		bottom: 20px;
+		right: 20px;
+		cursor: pointer;
+		z-index: 1000;
+		border-radius: 50%;
+		background-color: var(--jd-bg);
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+	
+	.hamburger span {
+		display: block;
+		height: 4px;
+		width: 24px;
+		background-color: var(--jd-plain);
+		border-radius: 2px;
+		position: absolute;
+		transition: all 0.3s ease;
+		left: 8px; /* Center the spans */
+	}
+	
+	.hamburger span:nth-child(1) {
+		top: 10px;
+	}
+	
+	.hamburger span:nth-child(2) {
+		top: 18px;
+	}
+	
+	.hamburger span:nth-child(3) {
+		top: 26px;
+	}
+	
+	/* When menu is active, prevent background scrolling */
+	body.menu-active {
+		overflow: hidden;
+	}
+	
+	/* Hamburger animation when menu is open */
+	.hamburger.active span:nth-child(1) {
+		transform: rotate(45deg) translate(5px, 5px);
+	}
+	
+	.hamburger.active span:nth-child(2) {
+		opacity: 0;
+	}
+	
+	.hamburger.active span:nth-child(3) {
+		transform: rotate(-45deg) translate(5px, -5px);
+	}
+	
+	/* Mobile nav menu */
+	.mobile-nav-menu {
+		display: none;
+		position: fixed;
+		width: 280px;
+		background-color: var(--jd-bg);
+		z-index: 1000;
+		padding: 16px;
+		box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+		border-radius: 8px;
+		border: 1px solid rgba(255, 255, 255, 0.1);
+	}
+	
+	.mobile-nav-menu.active {
+		display: block;
+	}
+	
+	/* Mask layer */
+	.mask {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background-color: rgba(0, 0, 0, 0.5);
+		z-index: 999;
+		display: none;
+	}
+	
+	.mask.active {
+		display: block;
+	}
+	
+	.nav-item > a {
+		padding-left: 16px !important;
+	}
+	
+	/* Hide logo when mobile menu is active */
+	body.menu-active .logo {
+		display: none !important;
+	}
 }
