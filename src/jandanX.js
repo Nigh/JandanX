@@ -57,54 +57,6 @@ import css from "./jandanX.css"
 						})
 				}, 200)
 			}
-
-			const wrapper = document.getElementById("main-warpper")
-			if (wrapper) {
-				const contentContainer = wrapper.querySelector(".container .row")
-				if (contentContainer) {
-					const newNav = document.createElement("div")
-					newNav.classList.add("new-nav")
-
-					const newLogo = document.createElement("div")
-					newLogo.classList.add("logo")
-					const logoSpan = document.createElement("span")
-					logoSpan.classList.add("logo-container")
-					newLogo.appendChild(logoSpan)
-
-					const Nav = document.createElement("nav")
-					Nav.classList.add("navbar")
-					contentContainer
-						.querySelectorAll(
-							".sidebar .nav-header ~ ul li a, .sidebar .text ul li a"
-						)
-						.forEach((a) => {
-							const navItem = document.createElement("div")
-							navItem.classList.add("nav-item")
-							const link = a.cloneNode(true)
-							link.classList.remove("nav-link")
-							navItem.appendChild(link)
-							Nav.appendChild(navItem)
-						})
-
-					newNav.appendChild(newLogo)
-					newNav.appendChild(Nav)
-
-					const parentContainer = contentContainer.parentElement
-					const layoutRow = document.createElement("div")
-					layoutRow.id = "layout-row"
-
-					parentContainer.insertBefore(layoutRow, contentContainer)
-					layoutRow.appendChild(newNav)
-					layoutRow.appendChild(contentContainer)
-					contentContainer.classList.add("layout-content")
-
-					const sidebar = contentContainer.querySelector(".sidebar")
-					if (sidebar) {
-						sidebar.classList.add("layout-sidebar")
-					}
-				}
-			}
-
 			const app = document.getElementById("app")
 			if (app) {
 				new MutationObserver(injectSpaIcons).observe(app, {
