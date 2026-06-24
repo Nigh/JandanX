@@ -33,6 +33,38 @@ import css from "./jandanX.css"
 		GM_addStyle(css)
 
 		if (location.pathname.startsWith("/new/")) {
+			let debounce = null
+			function injectSpaIcons() {
+				if (debounce) return
+				debounce = setTimeout(() => {
+					debounce = null
+					document
+						.querySelectorAll("ul.main-nav li.nav-item > a.nav-link")
+						.forEach((a) => {
+							const name = a.textContent?.trim()
+							if (!name || !nav_icons[name]) return
+							if (a.querySelector(".nav-icon")) return
+							const svgIcon = document.createElement("svg")
+							const path = document.createElement("path")
+							svgIcon.setAttribute("class", "nav-icon")
+							svgIcon.setAttribute("width", "24")
+							svgIcon.setAttribute("height", "24")
+							svgIcon.setAttribute("viewBox", "0 0 24 24")
+							path.setAttribute("d", nav_icons[name])
+							path.setAttribute("style", "fill:#fff")
+							svgIcon.appendChild(path)
+							a.insertBefore(svgIcon, a.firstChild)
+						})
+				}, 200)
+			}
+			const app = document.getElementById("app")
+			if (app) {
+				new MutationObserver(injectSpaIcons).observe(app, {
+					childList: true,
+					subtree: true,
+				})
+			}
+			injectSpaIcons()
 			console.log("jandanX loaded (SPA mode)")
 			return
 		}
