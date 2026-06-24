@@ -33,38 +33,165 @@ import css from "./jandanX.css"
 		GM_addStyle(css)
 
 		if (location.pathname.startsWith("/new/")) {
+			const app = document.getElementById("app")
+			if (!app) return
+
+			const newNav = document.createElement("div")
+			newNav.classList.add("new-nav")
+
+			const logo = document.createElement("div")
+			logo.classList.add("logo")
+			const logoSpan = document.createElement("span")
+			logoSpan.classList.add("logo-container")
+			logo.appendChild(logoSpan)
+
+			const navbar = document.createElement("nav")
+			navbar.classList.add("navbar")
+			newNav.appendChild(logo)
+			newNav.appendChild(navbar)
+			app.appendChild(newNav)
+
 			let debounce = null
-			function injectSpaIcons() {
+			function syncNavItems() {
 				if (debounce) return
 				debounce = setTimeout(() => {
 					debounce = null
+					navbar.innerHTML = ""
 					document
-						.querySelectorAll("ul.main-nav li.nav-item > a.nav-link")
-						.forEach((a) => {
+						.querySelectorAll(
+							"#app nav#nav ul.main-nav li.nav-item"
+						)
+						.forEach((li) => {
+							const origA = li.querySelector("a")
+							if (!origA) return
+							const a = origA.cloneNode(true)
+							a.classList.remove("nav-link", "p-1")
 							const name = a.textContent?.trim()
-							if (!name || !nav_icons[name]) return
-							if (a.querySelector(".nav-icon")) return
-							const svgIcon = document.createElement("svg")
-							const path = document.createElement("path")
-							svgIcon.setAttribute("class", "nav-icon")
-							svgIcon.setAttribute("width", "24")
-							svgIcon.setAttribute("height", "24")
-							svgIcon.setAttribute("viewBox", "0 0 24 24")
-							path.setAttribute("d", nav_icons[name])
-							path.setAttribute("style", "fill:#fff")
-							svgIcon.appendChild(path)
-							a.insertBefore(svgIcon, a.firstChild)
+							if (name && nav_icons[name] && !a.querySelector(".nav-icon")) {
+								const svgIcon = document.createElement("svg")
+								const path = document.createElement("path")
+								svgIcon.setAttribute("class", "nav-icon")
+								svgIcon.setAttribute("width", "24")
+								svgIcon.setAttribute("height", "24")
+								svgIcon.setAttribute("viewBox", "0 0 24 24")
+								path.setAttribute("d", nav_icons[name])
+								path.setAttribute("style", "fill:#fff")
+								svgIcon.appendChild(path)
+								a.insertBefore(svgIcon, a.firstChild)
+							}
+							const navItem = document.createElement("div")
+							navItem.classList.add("nav-item")
+							navItem.appendChild(a)
+							navbar.appendChild(navItem)
 						})
+
+					const memberA = document.createElement("a")
+					memberA.href = "/member"
+					memberA.textContent = "用户中心"
+					if (nav_icons["用户中心"]) {
+						const svgIcon = document.createElement("svg")
+						const path = document.createElement("path")
+						svgIcon.setAttribute("class", "nav-icon")
+						svgIcon.setAttribute("width", "24")
+						svgIcon.setAttribute("height", "24")
+						svgIcon.setAttribute("viewBox", "0 0 24 24")
+						path.setAttribute("d", nav_icons["用户中心"])
+						path.setAttribute("style", "fill:#fff")
+						svgIcon.appendChild(path)
+						memberA.insertBefore(svgIcon, memberA.firstChild)
+					}
+					const memberItem = document.createElement("div")
+					memberItem.classList.add("nav-item")
+					memberItem.appendChild(memberA)
+					navbar.appendChild(memberItem)
 				}, 200)
 			}
-			const app = document.getElementById("app")
-			if (app) {
-				new MutationObserver(injectSpaIcons).observe(app, {
-					childList: true,
-					subtree: true,
-				})
+
+			new MutationObserver(syncNavItems).observe(app, {
+				childList: true,
+				subtree: true,
+			})
+			syncNavItems()
+
+			let hamburger = null
+			let mobileMenu = null
+			let mask = null
+
+			function closeMobileMenu() {
+				if (!mobileMenu || !hamburger || !mask) return
+				mobileMenu.classList.remove("active")
+				hamburger.classList.remove("active")
+				mask.classList.remove("active")
+				document.body.classList.remove("jd-menu-active")
 			}
-			injectSpaIcons()
+
+			function positionMobileMenu() {
+				if (!hamburger || !mobileMenu) return
+				const rect = hamburger.getBoundingClientRect()
+				mobileMenu.style.top = `${Math.max(8, rect.top - mobileMenu.offsetHeight - 8)}px`
+				mobileMenu.style.left = `${Math.max(8, rect.right - mobileMenu.offsetWidth)}px`
+			}
+
+			function clearMobileMenu() {
+				if (hamburger) hamburger.remove()
+				if (mobileMenu) mobileMenu.remove()
+				if (mask) mask.remove()
+				hamburger = null
+				mobileMenu = null
+				mask = null
+				document.body.classList.remove("jd-menu-active")
+			}
+
+			function createMobileMenu() {
+				hamburger = document.createElement("div")
+				hamburger.classList.add("jd-hamburger")
+				hamburger.innerHTML = "<span></span><span></span><span></span>"
+
+				mobileMenu = document.createElement("div")
+				mobileMenu.classList.add("jd-mobile-menu")
+				mobileMenu.appendChild(newNav)
+
+				mask = document.createElement("div")
+				mask.classList.add("jd-mask")
+
+				app.appendChild(mask)
+				app.appendChild(mobileMenu)
+				app.appendChild(hamburger)
+
+				hamburger.addEventListener("click", () => {
+					mobileMenu.classList.toggle("active")
+					hamburger.classList.toggle("active")
+					mask.classList.toggle("active")
+					if (mobileMenu.classList.contains("active")) {
+						document.body.classList.add("jd-menu-active")
+						positionMobileMenu()
+					} else {
+						document.body.classList.remove("jd-menu-active")
+					}
+				})
+
+				mask.addEventListener("click", closeMobileMenu)
+			}
+
+			function renderByViewport() {
+				const isMobile = window.innerWidth <= 768
+				if (isMobile) {
+					if (!mobileMenu) createMobileMenu()
+					if (!mobileMenu.contains(newNav)) mobileMenu.appendChild(newNav)
+				} else {
+					clearMobileMenu()
+					if (!app.contains(newNav)) app.appendChild(newNav)
+				}
+			}
+
+			renderByViewport()
+			window.addEventListener("resize", () => {
+				renderByViewport()
+				if (mobileMenu && mobileMenu.classList.contains("active")) {
+					positionMobileMenu()
+				}
+			})
+
 			console.log("jandanX loaded (SPA mode)")
 			return
 		}
