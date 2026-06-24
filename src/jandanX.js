@@ -11,6 +11,7 @@ import css from "./jandanX.css"
 		}
     `
 	const nav_icons = {
+		女装: `M12 2C10.9 2 10 2.9 10 4v1H7l-1 5c-.1.6.1 1.2.5 1.6L8 14v6h2.5v-5h3v5H16v-6l1.5-2.4c.4-.4.6-1 .5-1.6l-1-5h-3V4c0-1.1-.9-2-2-2m-3.5 3h7l.8 4H7.7l.8-4z`,
 		首页: `M12 2C7.421 2 4 8.072 4 13.5c0 5.084 3.215 8.5 8 8.5s8-3.416 8-8.5C20 8.072 16.579 2 12 2m0 2c2.467 0 4.896 3.124 5.712 6.875L16.5 12.086l-1.5-1.5-1.5 1.5-1.5-1.5-1.5 1.5-1.5-1.5-1.5 1.5-1.212-1.212C7.104 7.124 9.533 4 12 4m0 16c-2.901 0-6-1.708-6-6.5l.003-.083L7.5 14.914l1.5-1.5 1.5 1.5 1.5-1.5 1.5 1.5 1.5-1.5 1.5 1.5 1.497-1.497.003.083c0 4.793-3.099 6.5-6 6.5`,
 		问答: `M15.333 9.5A3.5 3.5 0 0 0 8.8 7.75a1 1 0 0 0 1.733 1 1.5 1.5 0 0 1 1.3-.75 1.5 1.5 0 1 1 0 3h-.003a1 1 0 0 0-.19.039 1 1 0 0 0-.198.04 1 1 0 0 0-.155.105 1 1 0 0 0-.162.11 1 1 0 0 0-.117.174 1 1 0 0 0-.097.144 1 1 0 0 0-.043.212 1 1 0 0 0-.035.176v1l.002.011v.491a1 1 0 0 0 1 .998h.003a1 1 0 0 0 .998-1.002l-.002-.662A3.49 3.49 0 0 0 15.333 9.5m-4.203 6.79a1 1 0 0 0 .7 1.71 1.04 1.04 0 0 0 .71-.29 1.015 1.015 0 0 0 0-1.42 1.034 1.034 0 0 0-1.41 0`,
 		树洞: `M20.681 2.588h-17.4c-.881 0-1.594.712-1.594 1.594v10.837c0 .881.712 1.594 1.594 1.594h1.087l-.188 5.475 4.931-5.475H20.68c.881 0 1.594-.712 1.594-1.594V4.181c0-.881-.712-1.594-1.594-1.594`,
@@ -26,9 +27,13 @@ import css from "./jandanX.css"
 	const style = document.createElement("style")
 	style.textContent = earlyCSS
 	window.addEventListener("DOMContentLoaded", () => {
+		if (location.pathname.startsWith("/new/")) return
 		document.head.insertBefore(style, document.head.firstChild)
 	})
 	window.addEventListener("load", () => {
+		if (location.pathname.startsWith("/new/")) return
+		GM_addStyle(css)
+
 		let pageNavObserver = null
 		let optimizePageNavTimer = null
 		let navGapTimer = null
@@ -328,8 +333,6 @@ import css from "./jandanX.css"
 			scheduleUpdateSideNavGapVars(0)
 		})
 
-		// Add styles
-		GM_addStyle(css)
 		console.log("jandanX loaded")
 	})
 })()
