@@ -27,11 +27,13 @@ import css from "./jandanX.css"
 	const style = document.createElement("style")
 	style.textContent = earlyCSS
 	window.addEventListener("DOMContentLoaded", () => {
-		if (location.pathname.startsWith("/new/")) return
 		document.head.insertBefore(style, document.head.firstChild)
 	})
 	window.addEventListener("load", () => {
+		GM_addStyle(css)
+
 		if (location.pathname.startsWith("/new/")) {
+			console.log("jandanX loaded (SPA mode)")
 			return
 		}
 
@@ -334,8 +336,6 @@ import css from "./jandanX.css"
 			scheduleUpdateSideNavGapVars(0)
 		})
 
-		// Add styles
-		GM_addStyle(css)
 		console.log("jandanX loaded")
 	})
 })()
